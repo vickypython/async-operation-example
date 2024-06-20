@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download Progress</title>
+  <!-- < -->
+</head>
+<body>
+<script>
+function BoilingWater() {
+  return new Promise((resolve,reject)=>{
+    console.log('started to boilwater');
+    setTimeout(()=>resolve('water boiled'),1000)
+  })
+}
+function PrepareKales() {
+  return new Promise((resolve,reject)=>{
+    console.log('started to PrepareKales');
+    setTimeout(()=>resolve('kales prepared'),2000)
+  })
+}
+function CookUgali() {
+  return new Promise((resolve,reject)=>{
+    console.log('started to CookUgali');
+    setTimeout(()=>resolve('ugali cooked'),3000)
+  })
+}
+function CookKales() {
+  return new Promise((resolve,reject)=>{
+    console.log('started to CookKales');
+    setTimeout(()=>reject('kales cooked'),5000)
+  })
+}
+async function CookMeal(){
+ try {
+   //started to prepare to boil water and prepare kales
+const waterBoiled=BoilingWater()
+const kalesPrepare= await PrepareKales()
+console.log(kalesPrepare);
+//waiting process for both let put them on array to wait
+// const [waterResults,kalesResult]= await Promise.all([waterBoiled,kalesPrepare])
+const waterResults=await waterBoiled
+console.log(waterResults);
+
+//cook ugali after water boils
+const cookUgali=await CookUgali()
+console.log(cookUgali);
+//cook kales after you cook uagli
+const cookKales=await CookKales()
+console.log(cookKales);
+console.log('Both meals cooked');
+ } catch (error) {
+  console.error('An error occured:',error);
+ }
+}
+CookMeal()
+
+</script>
+</body>
+</html>
